@@ -1,3 +1,5 @@
+import Pitch
+
 class Strike_zone(Pitch):
 
 
@@ -6,7 +8,7 @@ class Strike_zone(Pitch):
         self.status = False
         pass
 
-    def get_status():
+    def get_status(self):
         return self.status
     
     def generate_strike_zone():
