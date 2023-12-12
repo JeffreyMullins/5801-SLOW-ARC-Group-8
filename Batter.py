@@ -1,8 +1,8 @@
 class Batter:
-
-    strike_zone = []
+    
 
     def __init__(self) -> None:
+        self.strike_zone = []
         pass
 
     def swing():

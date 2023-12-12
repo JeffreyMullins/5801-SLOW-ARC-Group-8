@@ -1,10 +1,11 @@
 class Umpire:
 
-    permissions = False
-
-    decision = False
+    
 
     def __init__(self) -> None:
+        self.permissions = False
+        self.decision = False
+        
         pass
 
     def change_pitch_status():

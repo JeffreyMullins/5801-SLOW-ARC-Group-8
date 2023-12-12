@@ -1,3 +1,5 @@
+import Pitch
+
 class Pitcher:
 
     def __init__(self) -> None:

@@ -1,8 +1,9 @@
 class Display:
 
-    current_result = ""
+    
 
     def __init__(self) -> None:
+        self.current_result = ""
         pass
 
     def display():
