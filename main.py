@@ -1,5 +1,4 @@
 # NOT OFFICAL COMMENT, PLEASE EDIT LATER: this is the main file for the SLOW-ARC system
-import os
 import sys
 
 import globals
@@ -30,18 +29,17 @@ def main():
     pitcher.display = display
     pitcher.state = True
 
-    print(f'[main]: camera.parsed_files length -> {len(camera.parsed_files)}') if globals.DEBUG_MODE else None
+    print(f'[main]: camera.parsed_files length -> {len(camera.parsed_files)}') if globals.DEBUG_MODE_ON else None
 
     i = 0
     for i in range(len(camera.parsed_files)):
-        print(f"\n[main]: calling pitcher.throw_pitch() number > {i}") if globals.DEBUG_MODE else None
+        print(f"\n[main]: calling pitcher.throw_pitch() number -> {i}") if globals.DEBUG_MODE_ON else None
         pitcher.throw_pitch()
         i += 1
 
     print("Finished, have a good day!")
 
     umpire.exit()
-
 
 
 if __name__ == "__main__":

@@ -46,11 +46,11 @@ class Display:
         :return: None
         """
         # Get the umpire's determination of the pitch
-        print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if globals.DEBUG_MODE else None
+        print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if globals.DEBUG_MODE_ON else None
         umpire.change_pitch_status(pitch)
 
         # Display the pitch result
-        print("\n[Display][read_user_decision]: calling self.display") if globals.DEBUG_MODE else None
+        print("\n[Display][read_user_decision]: calling self.display") if globals.DEBUG_MODE_ON else None
         self.display(pitch)
 
         return None

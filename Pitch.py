@@ -1,5 +1,6 @@
 import globals
-
+from StrikeZone import StrikeZone
+from Batter import Batter
 
 class Pitch:
     """
@@ -32,13 +33,46 @@ class Pitch:
         :param camera: The camera to get input data from.
         :return: None
         """
-        print("\n[Pitch][compute_pitch_status]: computing pitch status") if globals.DEBUG_MODE else None
-        pitch_data = camera.read_data()
+        print("\n[Pitch][compute_pitch_status]: computing pitch status") if globals.DEBUG_MODE_ON else None
 
-        print(f"[Pitch][compute_pitch_status]: pitch data -> {pitch_data[9]}") if globals.DEBUG_MODE else None
+        # Get data of a pitch from the camera
+        data = camera.read_data()
+        print(f"[Pitch][compute_pitch_status]: strike_zone data -> {[data[i] for i in range(0,5)]}") \
+            if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: batter data -> {[data[i] for i in range(5, 9)]}") \
+            if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: pitch data -> {data[9]}") if globals.DEBUG_MODE_ON else None
 
-        # algorithm here
-        print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if globals.DEBUG_MODE else None
+        # Set up the strike zone
+        strike_zone = StrikeZone()
+        strike_zone.front_close_corner = data[0]
+        strike_zone.back_close_corner = data[1]
+        strike_zone.point = data[2]
+        strike_zone.back_far_corner = data[3]
+        strike_zone.front_far_corner = data[4]
+
+        # Set up the batter
+        batter = Batter()
+        batter.shoulder1 = data[5]
+        batter.shoulder2 = data[6]
+        batter.knee1 = data[7]
+        batter.knee2 = data[8]
+
+        # Set up the pitch data
+        pitch_data = data[9]
+        timestamps = [pitch_data[i][0] for i in range(len(pitch_data))]
+        ball_left_xy = [[pitch_data[i][3], pitch_data[i][4]] for i in range(len(pitch_data))]
+        ball_center_xy = [[pitch_data[i][1], pitch_data[i][2]] for i in range(len(pitch_data))]
+        ball_right_xy = [[pitch_data[i][5], pitch_data[i][6]] for i in range(len(pitch_data))]
+
+        print(f"[Pitch][compute_pitch_status]: timestamps -> {timestamps}") if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_left_xy -> {ball_left_xy}") if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_center_xy -> {ball_center_xy}") if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_right_xy -> {ball_right_xy}") if globals.DEBUG_MODE_ON else None
+
+        # cook the algorithm here
+
+        print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if globals.DEBUG_MODE_ON else None
 
         return None
 

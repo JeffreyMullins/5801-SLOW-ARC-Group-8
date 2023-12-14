@@ -30,7 +30,7 @@ class Umpire:
         :param pitch: The pitch object that's status needs to be changed.
         :return: True if the pitch status was changed, otherwise False.
         """
-        print("\n[Umpire][change_pitch_status]: starting") if globals.DEBUG_MODE else None
+        print("\n[Umpire][change_pitch_status]: starting") if globals.DEBUG_MODE_ON else None
 
         # Ensure pitch is not None
         if pitch is None:
@@ -44,11 +44,11 @@ class Umpire:
 
         # Create time
         start_time = time.time()
-        print(f"[Umpire][change_pitch_status]: start_time -> {start_time}") if globals.DEBUG_MODE else None
+        print(f"[Umpire][change_pitch_status]: start_time -> {start_time}") if globals.DEBUG_MODE_ON else None
 
         # Receive and validate umpire input. The umpire has global.UMPIRE_TIMEOUT_TIME seconds before none is assumed.
         while True:
-            print(f"\n[Umpire][change_pitch_status]: creating input_thread") if globals.DEBUG_MODE else None
+            print(f"\n[Umpire][change_pitch_status]: creating input_thread") if globals.DEBUG_MODE_ON else None
             input_thread = threading.Thread(target=self.get_terminal_input)
             input_thread.start()
 
@@ -70,18 +70,22 @@ class Umpire:
 
         # Set the pitch status or return false if the umpire did not change the status
         if self.umpire_input in none_inputs:
+            print(f"\n[Umpire][change_pitch_status]: pitch_status not changed") if globals.DEBUG_MODE_ON else None
             return False
         elif self.umpire_input in ball_inputs:
             pitch.set_pitch_status("ball")
         elif self.umpire_input in strike_inputs:
             pitch.set_pitch_status("strike")
 
+        print(f"\n[Umpire][change_pitch_status]: pitch_status -> {pitch.pitch_status}") \
+            if globals.DEBUG_MODE_ON else None
+
         return True
 
     def exit(self):
         """
         Exits the program.
-        Uses exit with os to terminate still waiting umpire.read_terminal_input threads
+        Uses exit with os to terminate any still waiting umpire.read_terminal_input threads.
         """
         os._exit(0)
 

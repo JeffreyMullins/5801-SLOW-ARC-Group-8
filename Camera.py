@@ -48,7 +48,7 @@ class Camera:
         return None
 
     def process_directory(self, directory_path: str):
-        print("\n[Camera][process_directory]: starting traversal") if globals.DEBUG_MODE else None
+        print("\n[Camera][process_directory]: starting traversal") if globals.DEBUG_MODE_ON else None
         # Traverse the given directory
         for filename in os.listdir(directory_path):
             file_path = os.path.join(directory_path, filename)
@@ -56,10 +56,10 @@ class Camera:
             # Ensure the file is a regular file
             if os.path.isfile(file_path):
                 file = open(file_path, 'r')
-                print(f"[Camera][process_directory]: parsing file -> {file_path}") if globals.DEBUG_MODE else None
+                print(f"[Camera][process_directory]: parsing file -> {file_path}") if globals.DEBUG_MODE_ON else None
                 self.parse_csv_file(file)
 
-        print("[Camera][process_directory]: traversal done\n") if globals.DEBUG_MODE else None
+        print("[Camera][process_directory]: traversal done\n") if globals.DEBUG_MODE_ON else None
         return None
 
     def read_data(self):

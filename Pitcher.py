@@ -20,7 +20,7 @@ class Pitcher:
         if self.state is False:
             return None
 
-        print("\n[Pitcher][throw_pitch]: throwing pitch") if globals.DEBUG_MODE else None
+        print("\n[Pitcher][throw_pitch]: throwing pitch") if globals.DEBUG_MODE_ON else None
 
         # Initialize a new pitch object
         pitch = Pitch()
@@ -32,12 +32,12 @@ class Pitcher:
         self.pitches_list.append(pitch)
 
         # Compute the result of the pitch
-        print("[Pitcher][throw_pitch]: calling pitch.compute_pitch_status") if globals.DEBUG_MODE else None
+        print("[Pitcher][throw_pitch]: calling pitch.compute_pitch_status") if globals.DEBUG_MODE_ON else None
         pitch.compute_pitch_status(self.camera)
-        print("[Pitcher][throw_pitch]: compute_pitch_status finished") if globals.DEBUG_MODE else None
+        print("[Pitcher][throw_pitch]: compute_pitch_status finished") if globals.DEBUG_MODE_ON else None
 
         # Read user decision on the pitch
-        print("[Pitcher][throw_pitch]: calling display.read_user_decision") if globals.DEBUG_MODE else None
+        print("[Pitcher][throw_pitch]: calling display.read_user_decision") if globals.DEBUG_MODE_ON else None
         self.display.read_user_decision(pitch, self.umpire)
 
         return None
