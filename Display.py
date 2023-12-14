@@ -1,4 +1,4 @@
-import globals
+import config
 
 
 class Display:
@@ -24,16 +24,21 @@ class Display:
             return None
 
         # Print out the result of the pitch
-        print("\n==================")
+        print("\n|========================|")
         if pitch.pitch_status == "ball":
-            print("====== BALL ======")
+            print("|-------|  BALL  |-------|")
             self.current_result = "ball"
         elif pitch.pitch_status == "strike":
-            print("===== STRIKE =====")
+            print("|-------| STRIKE |-------|")
             self.current_result = "strike"
         else:
-            print("===== ERROR =====")
-        print("==================")
+            print("|-------| ERROR |--------|")
+        print("|========================|")
+
+        # |-------| ERROR |--------|
+        # |-------|  BALL  |-------|
+        # |-------| STRIKE |-------|
+        # |========================|
 
         return None
 
@@ -46,11 +51,11 @@ class Display:
         :return: None
         """
         # Get the umpire's determination of the pitch
-        print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if globals.DEBUG_MODE_ON else None
+        print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if config.DEBUG_MODE_ON else None
         umpire.change_pitch_status(pitch)
 
         # Display the pitch result
-        print("\n[Display][read_user_decision]: calling self.display") if globals.DEBUG_MODE_ON else None
+        print("\n[Display][read_user_decision]: calling self.display") if config.DEBUG_MODE_ON else None
         self.display(pitch)
 
         return None

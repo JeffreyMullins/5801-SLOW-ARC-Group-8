@@ -1,7 +1,4 @@
-# NOT OFFICAL COMMENT, PLEASE EDIT LATER: this is the main file for the SLOW-ARC system
-import sys
-
-import globals
+import config
 from Camera import Camera
 from Display import Display
 from Pitcher import Pitcher
@@ -16,7 +13,10 @@ def main():
 
     # Initialize the camera for the game
     camera = Camera()
-    input_directory_path = "datafiles/"
+    input_directory_path = config.INPUT_DIRECTORY_PATH
+    if input_directory_path is None or input_directory_path == "":
+        print("ERROR: please specify an input directory in config.py")
+        return
     camera.process_directory(input_directory_path)
 
     # Initialize the display for the game
@@ -29,11 +29,11 @@ def main():
     pitcher.display = display
     pitcher.state = True
 
-    print(f'[main]: camera.parsed_files length -> {len(camera.parsed_files)}') if globals.DEBUG_MODE_ON else None
+    print(f'[main]: camera.parsed_files length -> {len(camera.parsed_files)}') if config.DEBUG_MODE_ON else None
 
     i = 0
     for i in range(len(camera.parsed_files)):
-        print(f"\n[main]: calling pitcher.throw_pitch() number -> {i}") if globals.DEBUG_MODE_ON else None
+        print(f"\n[main]: calling pitcher.throw_pitch() number -> {i}") if config.DEBUG_MODE_ON else None
         pitcher.throw_pitch()
         i += 1
 

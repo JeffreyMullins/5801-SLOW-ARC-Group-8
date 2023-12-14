@@ -2,7 +2,7 @@ import os
 import threading
 import time
 
-import globals
+import config
 
 
 class Umpire:
@@ -30,7 +30,7 @@ class Umpire:
         :param pitch: The pitch object that's status needs to be changed.
         :return: True if the pitch status was changed, otherwise False.
         """
-        print("\n[Umpire][change_pitch_status]: starting") if globals.DEBUG_MODE_ON else None
+        print("\n[Umpire][change_pitch_status]: starting") if config.DEBUG_MODE_ON else None
 
         # Ensure pitch is not None
         if pitch is None:
@@ -44,16 +44,16 @@ class Umpire:
 
         # Create time
         start_time = time.time()
-        print(f"[Umpire][change_pitch_status]: start_time -> {start_time}") if globals.DEBUG_MODE_ON else None
+        print(f"[Umpire][change_pitch_status]: start_time -> {start_time}") if config.DEBUG_MODE_ON else None
 
         # Receive and validate umpire input. The umpire has global.UMPIRE_TIMEOUT_TIME seconds before none is assumed.
         while True:
-            print(f"\n[Umpire][change_pitch_status]: creating input_thread") if globals.DEBUG_MODE_ON else None
+            print(f"\n[Umpire][change_pitch_status]: creating input_thread") if config.DEBUG_MODE_ON else None
             input_thread = threading.Thread(target=self.get_terminal_input)
             input_thread.start()
 
             # Wait global.UMPIRE_TIMEOUT_TIME then continue on
-            input_thread.join(timeout=globals.UMPIRE_TIMEOUT_TIME)
+            input_thread.join(timeout=config.UMPIRE_TIMEOUT_TIME)
 
             # If the thread is still alive then exit the loop as that means over global.UMPIRE_TIMEOUT_TIME has passed
             if input_thread.is_alive():
@@ -63,14 +63,14 @@ class Umpire:
             if self.umpire_input in all_valid_inputs:
                 break
 
-            # If elapsed time is greater than globals.UMPIRE_TIMEOUT_TIME then exit the loop
+            # If elapsed time is greater than config.UMPIRE_TIMEOUT_TIME then exit the loop
             elapsed_time = time.time() - start_time
-            if elapsed_time >= globals.UMPIRE_TIMEOUT_TIME:
+            if elapsed_time >= config.UMPIRE_TIMEOUT_TIME:
                 break
 
         # Set the pitch status or return false if the umpire did not change the status
         if self.umpire_input in none_inputs:
-            print(f"\n[Umpire][change_pitch_status]: pitch_status not changed") if globals.DEBUG_MODE_ON else None
+            print(f"\n[Umpire][change_pitch_status]: pitch_status not changed") if config.DEBUG_MODE_ON else None
             return False
         elif self.umpire_input in ball_inputs:
             pitch.set_pitch_status("ball")
@@ -78,7 +78,7 @@ class Umpire:
             pitch.set_pitch_status("strike")
 
         print(f"\n[Umpire][change_pitch_status]: pitch_status -> {pitch.pitch_status}") \
-            if globals.DEBUG_MODE_ON else None
+            if config.DEBUG_MODE_ON else None
 
         return True
 

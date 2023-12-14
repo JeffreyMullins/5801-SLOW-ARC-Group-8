@@ -1,4 +1,4 @@
-import globals
+import config
 from StrikeZone import StrikeZone
 from Batter import Batter
 
@@ -33,15 +33,15 @@ class Pitch:
         :param camera: The camera to get input data from.
         :return: None
         """
-        print("\n[Pitch][compute_pitch_status]: computing pitch status") if globals.DEBUG_MODE_ON else None
+        print("\n[Pitch][compute_pitch_status]: computing pitch status") if config.DEBUG_MODE_ON else None
 
         # Get data of a pitch from the camera
         data = camera.read_data()
         print(f"[Pitch][compute_pitch_status]: strike_zone data -> {[data[i] for i in range(0,5)]}") \
-            if globals.DEBUG_MODE_ON else None
+            if config.DEBUG_MODE_ON else None
         print(f"[Pitch][compute_pitch_status]: batter data -> {[data[i] for i in range(5, 9)]}") \
-            if globals.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: pitch data -> {data[9]}") if globals.DEBUG_MODE_ON else None
+            if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: pitch data -> {data[9]}") if config.DEBUG_MODE_ON else None
 
         # Set up the strike zone
         strike_zone = StrikeZone()
@@ -65,14 +65,14 @@ class Pitch:
         ball_center_xy = [[pitch_data[i][1], pitch_data[i][2]] for i in range(len(pitch_data))]
         ball_right_xy = [[pitch_data[i][5], pitch_data[i][6]] for i in range(len(pitch_data))]
 
-        print(f"[Pitch][compute_pitch_status]: timestamps -> {timestamps}") if globals.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_left_xy -> {ball_left_xy}") if globals.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_center_xy -> {ball_center_xy}") if globals.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_right_xy -> {ball_right_xy}") if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: timestamps -> {timestamps}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_left_xy -> {ball_left_xy}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_center_xy -> {ball_center_xy}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_right_xy -> {ball_right_xy}") if config.DEBUG_MODE_ON else None
 
         # cook the algorithm here
 
-        print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if globals.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if config.DEBUG_MODE_ON else None
 
         return None
 
