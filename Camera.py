@@ -66,7 +66,7 @@ class Camera:
         """
         Returns a list of data from a pitch data file.
 
-        :return: data
+        :return: data of one pitch
         """
         data = self.parsed_files.pop()
 

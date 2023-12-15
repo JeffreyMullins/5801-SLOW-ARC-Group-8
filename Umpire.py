@@ -96,13 +96,37 @@ class Umpire:
         :param pitches_list: A list of pitch objects to create an output file for.
         :return: None
         """
-        output_file = open("output.txt", "w")
+        print(f"\n[Umpire][create_output_file]: creating output file") if config.DEBUG_MODE_ON else None
+        print(f"\n[Umpire][create_output_file]: cwd -> {os.getcwd()}") if config.DEBUG_MODE_ON else None
 
-        pitch_count = len(pitches_list)
-        output_file.write(f"pitch count, {pitch_count}\n")
+        # Create the name of the output file
+        # output_file_name = config.OUTPUT_DIRECTORY_PATH + "output.txt"
+        output_file_name = os.path.join(config.OUTPUT_DIRECTORY_PATH, "output.csv")
+        print(f"[Umpire][create_output_file]: output_file_name -> {output_file_name}") if config.DEBUG_MODE_ON else None
 
-        for index, pitch in enumerate(pitches_list):
-            pitch_status = pitch.pitch_status
-            output_file.write(f"{index}, {pitch_status}\n")
+        # Ensure that the output directory exists. If not, create it
+        if not os.path.exists(config.OUTPUT_DIRECTORY_PATH):
+            print(f"[Umpire][create_output_file]: creating OUTPUT_DIRECTORY_PATH") if config.DEBUG_MODE_ON else None
+            os.makedirs(config.OUTPUT_DIRECTORY_PATH)
+
+        # Try to create and print to the file
+        output_file = None
+        try:
+            output_file = open(output_file_name, "w")
+
+            pitch_count = len(pitches_list)
+            output_file.write(f"pitch count, {pitch_count}\n")
+            print(f"[Umpire][create_output_file]: pitch_count -> {pitch_count}") if config.DEBUG_MODE_ON else None
+
+            for index, pitch in enumerate(pitches_list):
+                pitch_status = pitch.pitch_status
+                print(f"[Umpire][create_output_file]: index, pitch_status -> [{index}, {pitch_status}]") if config.DEBUG_MODE_ON else None
+                output_file.write(f"{index}, {pitch_status}\n")
+
+        except Exception as e:
+            print(f"[Umpire][create_output_file]: error occurred creating output file") if config.DEBUG_MODE_ON else None
+
+        finally:
+            output_file.close()
 
         return None
