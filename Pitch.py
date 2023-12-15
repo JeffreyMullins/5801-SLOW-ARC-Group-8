@@ -1,6 +1,8 @@
 import config
-from StrikeZone import StrikeZone
 from Batter import Batter
+from Camera import Camera
+from StrikeZone import StrikeZone
+
 
 class Pitch:
     """
@@ -13,8 +15,8 @@ class Pitch:
         pitch_status (str): A string describing the status of the pitch, either "ball" or "strike".
         time_thrown (str): A string representing the time when the pitch was thrown, in a specific
             date-time format.
-        pitcher: An object representing the pitcher who threw the pitch.
-        umpire: An object representing the umpire who will make the call on the pitch.
+        pitcher (Pitcher): An object representing the pitcher who threw the pitch.
+        umpire (Umpire): An object representing the umpire who will make the call on the pitch.
     """
 
     def __init__(self) -> None:
@@ -26,7 +28,7 @@ class Pitch:
         self.pitcher = None
         self.umpire = None
 
-    def compute_pitch_status(self, camera):
+    def compute_pitch_status(self, camera: Camera):
         """
         Computes the status of the pitch based on input data.
 
@@ -37,7 +39,7 @@ class Pitch:
 
         # Get data of a pitch from the camera
         data = camera.read_data()
-        print(f"[Pitch][compute_pitch_status]: strike_zone data -> {[data[i] for i in range(0,5)]}") \
+        print(f"[Pitch][compute_pitch_status]: strike_zone data -> {[data[i] for i in range(0, 5)]}") \
             if config.DEBUG_MODE_ON else None
         print(f"[Pitch][compute_pitch_status]: batter data -> {[data[i] for i in range(5, 9)]}") \
             if config.DEBUG_MODE_ON else None
@@ -50,6 +52,7 @@ class Pitch:
         strike_zone.point = data[2]
         strike_zone.back_far_corner = data[3]
         strike_zone.front_far_corner = data[4]
+        strike_zone.generate_strike_zone()
 
         # Set up the batter
         batter = Batter()
@@ -76,9 +79,9 @@ class Pitch:
 
         return None
 
-    def set_pitch_status(self, new_status):
+    def set_pitch_status(self, new_status: str):
         """
-        Sets the status of the pitch object to the new status.
+        Sets the status of the pitch object to the given new status.
 
         :param new_status: The new status of the pitch
         :return: None

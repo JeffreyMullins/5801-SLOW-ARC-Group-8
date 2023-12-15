@@ -6,12 +6,12 @@ import config
 
 class Camera:
     """
-    Used to hold the status of, and the data read in by a camera.
-    In this implementation of SLOW-ARC, using data files in a directory as input instead of video.
+    Used to hold the status of and the data read in by a camera.
+    In this implementation of SLOW-ARC, uses data files in a directory as input instead of video.
 
     Attributes:
         locations (list): List of strings storing the location on the field the camera is
-        status (bool):
+        status (bool): The status of the camera
         parsed_files (list): List of parsed file data. Each entry represents a full set of pitch data.
     """
 
@@ -31,9 +31,11 @@ class Camera:
 
         line_counter = 0
         for row in csv_reader:
+            # Read data for strike zone and batter
             if line_counter < 9:
                 pair = [row[i] for i in range(2)]
                 file_data.append(pair)
+            # Read pitch data
             else:
                 line = [row[i] for i in range(7)]
                 pitch_data.append(line)
@@ -48,6 +50,15 @@ class Camera:
         return None
 
     def process_directory(self, directory_path: str):
+        """
+        Traverses the given directory path for regular files and runs parse_csv_file() on each one.
+
+        :param directory_path: The directory to traverse.
+        :return: None
+        """
+        if not os.path.exists(directory_path) or not os.path.isdir(directory_path):
+            print("ERROR: given input path is not a directory or doesn't exist")
+
         print("\n[Camera][process_directory]: starting traversal") if config.DEBUG_MODE_ON else None
         # Traverse the given directory
         for filename in os.listdir(directory_path):

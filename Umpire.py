@@ -1,8 +1,10 @@
 import os
 import threading
 import time
+from typing import List
 
 import config
+from Pitch import Pitch
 
 
 class Umpire:
@@ -20,12 +22,17 @@ class Umpire:
         self.umpire_input = ""
 
     def get_terminal_input(self):
+        """
+
+        Returns:
+        """
         self.umpire_input = input("ENTER NEW PITCH STATUS: ")
 
-    def change_pitch_status(self, pitch):
+    def change_pitch_status(self, pitch: Pitch):
         """
         Changes the status of a given pitch to the umpire's new determination.
-        The umpire has 2 seconds to make a determination before no change is assumed.
+        The umpire has time to make a determination before no change is assumed.
+        The amount of time to wait for the umpire is set in config as UMPIRE_TIMEOUT_TIME.
 
         :param pitch: The pitch object that's status needs to be changed.
         :return: True if the pitch status was changed, otherwise False.
@@ -89,7 +96,7 @@ class Umpire:
         """
         os._exit(0)
 
-    def create_output_file(self, pitches_list):
+    def create_output_file(self, pitches_list: List[Pitch]):
         """
         Creates an output file containing the result of each pitch in pitches_list.
 
@@ -120,11 +127,13 @@ class Umpire:
 
             for index, pitch in enumerate(pitches_list):
                 pitch_status = pitch.pitch_status
-                print(f"[Umpire][create_output_file]: index, pitch_status -> [{index}, {pitch_status}]") if config.DEBUG_MODE_ON else None
+                print(
+                    f"[Umpire][create_output_file]: index, pitch_status -> [{index}, {pitch_status}]") if config.DEBUG_MODE_ON else None
                 output_file.write(f"{index}, {pitch_status}\n")
 
         except Exception as e:
-            print(f"[Umpire][create_output_file]: error occurred creating output file") if config.DEBUG_MODE_ON else None
+            print(
+                f"[Umpire][create_output_file]: error occurred creating output file") if config.DEBUG_MODE_ON else None
 
         finally:
             output_file.close()
