@@ -9,6 +9,7 @@ import config
 
 class test_Camera(unittest.TestCase):
     def test_init(self):
+        # Test the initialization of all Camera object attributes
         test_camera = Camera()
         self.assertEqual(test_camera.locations, [])
         self.assertEqual(test_camera.status, False)
@@ -16,7 +17,8 @@ class test_Camera(unittest.TestCase):
 
         
     def test_read_data(self):
-        # not done
+        # Tests to make sure that the read_data can parse a CSV file and correctly increment the number of parsed files
+
         test_camera = Camera()
 
         file = open("datafiles/pitch_005130.csv", 'r')

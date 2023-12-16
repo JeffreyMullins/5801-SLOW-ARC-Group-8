@@ -6,8 +6,10 @@ import unittest
 import os
 
 
-class test_pitcher(unittest.TestCase):
+class test_display(unittest.TestCase):
     def test_init(self):
+        # Test the initialization of all Display object attributes
+
         test_dislay = Display()
         self.assertEqual(test_dislay.current_result, "")
         
