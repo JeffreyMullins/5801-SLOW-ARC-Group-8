@@ -43,4 +43,8 @@ class Pitcher:
         return None
 
     def get_all_pitches_status(self):
-        return None
+        pitch_statuses = []
+        for p in pitches_list:
+            pitch_statuses.append(p.pitch_status)
+
+        return pitch_statuses
