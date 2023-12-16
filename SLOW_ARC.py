@@ -69,8 +69,8 @@ def main():
             except Exception as e:
                 print(f"An unexpected error occurred: {e}")
 
-            # pitch_005130.csv -> error
-            # pitch_005829.csv -> error
+            # pitch_005130.csv -> strike
+            # pitch_005829.csv -> strike
             # pitch_006480.csv -> ball
 
     print("Finished, have a good day!")

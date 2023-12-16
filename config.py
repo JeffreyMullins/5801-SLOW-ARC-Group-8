@@ -2,7 +2,7 @@
 DEBUG_MODE_ON = False
 
 # Sets the amount of time in seconds that SLOW-ARC will wait for umpire input.
-UMPIRE_TIMEOUT_TIME = 0.5
+UMPIRE_TIMEOUT_TIME = 2
 
 # Enables manual input of filenames on the command line.
 COMMAND_LINE_MODE = False
