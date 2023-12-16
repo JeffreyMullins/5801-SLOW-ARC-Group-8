@@ -2,7 +2,10 @@ import config
 from Batter import Batter
 from Camera import Camera
 from StrikeZone import StrikeZone
+<<<<<<< HEAD
 # from shapely.geometry import LineString, Polygon
+=======
+>>>>>>> 39a21a0c29fd32bbcd452d0ff07bd33d762941a9
 
 
 class Pitch:
@@ -82,7 +85,10 @@ class Pitch:
         print(f"[Pitch][compute_pitch_status]: ball_center_x -> {ball_center_x}") if config.DEBUG_MODE_ON else None
         print(f"[Pitch][compute_pitch_status]: ball_right_x -> {ball_right_x}") if config.DEBUG_MODE_ON else None
 
-        # cook the algorithm here
+        # Default to strike
+        self.set_pitch_status("strike")
+
+        # The ball or strike algorithm
         call_reason = ""
         for i in range(len(pitch_data)):
             print(f"\n[Pitch][compute_pitch_status]: i -> {i}") if config.DEBUG_MODE_ON else None
@@ -105,9 +111,6 @@ class Pitch:
                 # if ball_width < 8 or 12 < ball_width:
                 #     self.set_pitch_status("ball")
                 #     call_reason += "/not on plate/"
-
-        # ball_line = LineString(pitch_data)
-        # strike_zone_polygon = Polygon()
 
         print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if config.DEBUG_MODE_ON else None
         print(f"[Pitch][compute_pitch_status]: call reason -> {call_reason}\n") if config.DEBUG_MODE_ON else None

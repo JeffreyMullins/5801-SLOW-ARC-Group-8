@@ -6,8 +6,6 @@ from Umpire import Umpire
 
 
 def main():
-    #print("Hi I'm the slow arc system, I'll go do things now.")
-
     # Initialize the umpire for the game
     umpire = Umpire()
 
@@ -31,6 +29,7 @@ def main():
     pitcher.state = True
 
     if config.COMMAND_LINE_MODE is False:
+        print("|-----| SLOW-ARC FAST MODE |-----|")
         i = 0
         for i in range(len(camera.parsed_files)):
             print(f"\n[main]: calling pitcher.throw_pitch() number -> {i}") if config.DEBUG_MODE_ON else None
@@ -70,9 +69,9 @@ def main():
             except Exception as e:
                 print(f"An unexpected error occurred: {e}")
 
-            # pitch_005130.csv
-            # pitch_005829.csv
-            # pitch_006480.csv
+            # pitch_005130.csv -> error
+            # pitch_005829.csv -> error
+            # pitch_006480.csv -> ball
 
     print("Finished, have a good day!")
 
