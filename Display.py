@@ -35,7 +35,7 @@ class Display:
             self.current_result = "strike"
         else:
             print("|-------| ERROR could not determine |--------|")
-        print("|========================|")
+        print("|========================|\n")
 
         # |-------| ERROR |--------|
         # |-------|  BALL  |-------|

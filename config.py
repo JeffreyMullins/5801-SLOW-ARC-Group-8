@@ -5,7 +5,7 @@ DEBUG_MODE_ON = False
 UMPIRE_TIMEOUT_TIME = 2
 
 # Enables manual input of filenames on the command line.
-COMMAND_LINE_MODE = False
+COMMAND_LINE_MODE = True
 
 # The path of the directory that holds the csv files for SLOW-ARC to use as input.
 INPUT_DIRECTORY_PATH = "datafiles/"
