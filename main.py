@@ -40,6 +40,7 @@ def main():
     elif config.COMMAND_LINE_MODE is True:
         print("|-----| SLOW-ARC MANUAL MODE |-----|")
         print("type 'exit' or 'e' to exit")
+        
 
         while True:
             file_name = None

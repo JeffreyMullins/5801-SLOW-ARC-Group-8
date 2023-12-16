@@ -23,7 +23,8 @@ class Umpire:
 
     def get_terminal_input(self):
         """
-        Returns:
+        Returns: None
+        Updates the terminal input that should be shown to the user
         """
         new_status = input("ENTER NEW PITCH STATUS: ")
         if new_status in ["strike", "ball", "s", "b"]:

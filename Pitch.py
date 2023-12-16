@@ -2,7 +2,7 @@ import config
 from Batter import Batter
 from Camera import Camera
 from StrikeZone import StrikeZone
-from shapely.geometry import LineString, Polygon
+# from shapely.geometry import LineString, Polygon
 
 
 class Pitch:
