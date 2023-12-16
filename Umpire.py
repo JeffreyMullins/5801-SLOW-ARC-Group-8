@@ -23,10 +23,13 @@ class Umpire:
 
     def get_terminal_input(self):
         """
-
         Returns:
         """
-        self.umpire_input = input("ENTER NEW PITCH STATUS: ")
+        new_status = input("ENTER NEW PITCH STATUS: ")
+        if new_status in ["strike", "ball", "s", "b"]:
+            self.umpire_input = new_status
+
+        return None
 
     def change_pitch_status(self, pitch: Pitch):
         """
@@ -128,8 +131,8 @@ class Umpire:
             for index, pitch in enumerate(pitches_list):
                 pitch_status = pitch.pitch_status
                 print(
-                    f"[Umpire][create_output_file]: index, pitch_status -> [{index}, {pitch_status}]") if config.DEBUG_MODE_ON else None
-                output_file.write(f"{index}, {pitch_status}\n")
+                    f"[Umpire][create_output_file]: index, pitch_status -> [{index+1}, {pitch_status}]") if config.DEBUG_MODE_ON else None
+                output_file.write(f"{index+1}, {pitch_status}\n")
 
         except Exception as e:
             print(

@@ -2,6 +2,7 @@ import config
 from Batter import Batter
 from Camera import Camera
 from StrikeZone import StrikeZone
+from shapely.geometry import LineString, Polygon
 
 
 class Pitch:
@@ -53,6 +54,11 @@ class Pitch:
         strike_zone.back_far_corner = data[3]
         strike_zone.front_far_corner = data[4]
         strike_zone.generate_strike_zone()
+        plate_close_width = strike_zone.back_close_corner[0] - strike_zone.front_close_corner[0]
+        plate_far_width = strike_zone.back_far_corner[0] - strike_zone.front_far_corner[0]
+
+        print(f"[Pitch][compute_pitch_status]: plate_close_width -> {plate_close_width}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: plate_far_width -> {plate_far_width}") if config.DEBUG_MODE_ON else None
 
         # Set up the batter
         batter = Batter()
@@ -64,18 +70,47 @@ class Pitch:
         # Set up the pitch data
         pitch_data = data[9]
         timestamps = [pitch_data[i][0] for i in range(len(pitch_data))]
-        ball_left_xy = [[pitch_data[i][3], pitch_data[i][4]] for i in range(len(pitch_data))]
-        ball_center_xy = [[pitch_data[i][1], pitch_data[i][2]] for i in range(len(pitch_data))]
-        ball_right_xy = [[pitch_data[i][5], pitch_data[i][6]] for i in range(len(pitch_data))]
+        ball_center_x = [pitch_data[i][1] for i in range(len(pitch_data))]
+        ball_center_y = [pitch_data[i][2] for i in range(len(pitch_data))]
+        ball_left_x = [pitch_data[i][3] for i in range(len(pitch_data))]
+        ball_left_y = [pitch_data[i][4] for i in range(len(pitch_data))]
+        ball_right_x = [pitch_data[i][5] for i in range(len(pitch_data))]
+        ball_right_y = [pitch_data[i][6] for i in range(len(pitch_data))]
 
         print(f"[Pitch][compute_pitch_status]: timestamps -> {timestamps}") if config.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_left_xy -> {ball_left_xy}") if config.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_center_xy -> {ball_center_xy}") if config.DEBUG_MODE_ON else None
-        print(f"[Pitch][compute_pitch_status]: ball_right_xy -> {ball_right_xy}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_left_x -> {ball_left_x}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_center_x -> {ball_center_x}") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: ball_right_x -> {ball_right_x}") if config.DEBUG_MODE_ON else None
 
         # cook the algorithm here
+        call_reason = ""
+        for i in range(len(pitch_data)):
+            print(f"\n[Pitch][compute_pitch_status]: i -> {i}") if config.DEBUG_MODE_ON else None
+
+            ball_width = ball_right_x[i] - ball_left_x[i]
+            ball_ppi = ball_width / 3.8
+            print(f"[Pitch][compute_pitch_status]: ball_width -> {ball_width}") if config.DEBUG_MODE_ON else None
+            print(f"[Pitch][compute_pitch_status]: ball_ppi -> {ball_ppi}") if config.DEBUG_MODE_ON else None
+
+            # If the ball's x value is past either knee's x value
+            if batter.knee2[0] <= ball_right_x[i] or batter.knee1[0] <= ball_right_x[i]:
+                # If the ball is below either knee
+                if ball_right_y[i] <= batter.knee2[1] or ball_right_y[i] <= batter.knee1[1]:
+                    print(f"[Pitch][compute_pitch_status]: BALL: ball past plate and below knee. "
+                          f"Knee1 x -> {batter.knee1[0]} OR Knee2 x -> {batter.knee2[0]} <= Ball x -> {ball_right_x[i]} "
+                          f"Ball y -> {ball_right_y[i]} <= Knee1 y -> {batter.knee1[1]} OR Knee2 y -> {batter.knee1[1]}") if config.DEBUG_MODE_ON else None
+                    self.set_pitch_status("ball")
+                    call_reason += "/short & too low/"
+
+                # if ball_width < 8 or 12 < ball_width:
+                #     self.set_pitch_status("ball")
+                #     call_reason += "/not on plate/"
+
+        # ball_line = LineString(pitch_data)
+        # strike_zone_polygon = Polygon()
 
         print(f"[Pitch][compute_pitch_status]: pitch status -> {self.pitch_status}\n") if config.DEBUG_MODE_ON else None
+        print(f"[Pitch][compute_pitch_status]: call reason -> {call_reason}\n") if config.DEBUG_MODE_ON else None
 
         return None
 

@@ -33,11 +33,11 @@ class Camera:
         for row in csv_reader:
             # Read data for strike zone and batter
             if line_counter < 9:
-                pair = [row[i] for i in range(2)]
+                pair = [int(row[i]) for i in range(2)]
                 file_data.append(pair)
             # Read pitch data
             else:
-                line = [row[i] for i in range(7)]
+                line = [int(row[i]) for i in range(7)]
                 pitch_data.append(line)
             line_counter += 1
 

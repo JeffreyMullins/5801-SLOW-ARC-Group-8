@@ -53,8 +53,9 @@ class Display:
         :return: None
         """
         # Get the umpire's determination of the pitch
-        print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if config.DEBUG_MODE_ON else None
-        umpire.change_pitch_status(pitch)
+        if config.COMMAND_LINE_MODE is False:
+            print("\n[Display][read_user_decision]: calling umpire.change_pitch_status") if config.DEBUG_MODE_ON else None
+            umpire.change_pitch_status(pitch)
 
         # Display the pitch result
         print("\n[Display][read_user_decision]: calling self.display") if config.DEBUG_MODE_ON else None
