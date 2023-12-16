@@ -3,6 +3,17 @@ from Pitch import Pitch
 
 
 class Pitcher:
+    """
+       Represents a pitcher in a baseball game.
+
+       Attributes:
+           state (bool): The current state of the pitcher, indicating whether they are active or not.
+           pitches_list (list): A list of pitch objects thrown by the pitcher.
+           num_pitches (int): The total number of pitches thrown by the pitcher.
+           umpire: Reference to the umpire object responsible for making pitch status decisions.
+           camera: Reference to the camera object used to capture the pitch.
+           display: Reference to the display object for user interactions.
+    """
     def __init__(self) -> None:
         self.state = False
         self.pitches_list = []
