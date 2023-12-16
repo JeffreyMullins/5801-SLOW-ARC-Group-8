@@ -8,9 +8,9 @@ import time
 import config
 
 
-class test_Umpire(unittest.TestCase):
+class test_umpire(unittest.TestCase):
     def test_init(self):
-        # test to make sure the initialization works correctly
+        # test to make sure the initialization works correctly for Umpire object
         test_umpire = Umpire()
         self.assertEqual(test_umpire.permissions, False)
         self.assertEqual(test_umpire.decision, False)
