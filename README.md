@@ -11,7 +11,7 @@
 
 ## How to build:
 - All input files should be placed into the folder called datafiles
-- If wanted to inpute filenames through the command line may set the COMMAND_LINE_MODE to true.
+- If wanted to inpute filenames through the command line may set the COMMAND_LINE_MODE to true, this is found in config.py.
 
 ## How to execute: 
 - Run SLOW_ARC.py 
