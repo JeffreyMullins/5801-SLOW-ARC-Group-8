@@ -1,4 +1,6 @@
 import config
+from Pitch import Pitch
+from Umpire import Umpire
 
 
 class Display:
@@ -13,7 +15,7 @@ class Display:
     def __init__(self) -> None:
         self.current_result = ""
 
-    def display(self, pitch):
+    def display(self, pitch: Pitch):
         """
         Displays the result of a pitch object to the terminal.
 
@@ -42,7 +44,7 @@ class Display:
 
         return None
 
-    def read_user_decision(self, pitch, umpire):
+    def read_user_decision(self, pitch: Pitch, umpire: Umpire):
         """
         Reads the decision of the umpire on a pitch's result. Then displays the result of the pitch.
 

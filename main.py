@@ -39,6 +39,8 @@ def main():
 
     print("Finished, have a good day!")
 
+    # Create an output file then exit
+    umpire.create_output_file(pitcher.pitches_list)
     umpire.exit()
 
 

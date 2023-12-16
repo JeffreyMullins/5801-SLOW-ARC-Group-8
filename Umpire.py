@@ -1,8 +1,10 @@
 import os
 import threading
 import time
+from typing import List
 
 import config
+from Pitch import Pitch
 
 
 class Umpire:
@@ -20,12 +22,17 @@ class Umpire:
         self.umpire_input = ""
 
     def get_terminal_input(self):
+        """
+
+        Returns:
+        """
         self.umpire_input = input("ENTER NEW PITCH STATUS: ")
 
-    def change_pitch_status(self, pitch):
+    def change_pitch_status(self, pitch: Pitch):
         """
         Changes the status of a given pitch to the umpire's new determination.
-        The umpire has 2 seconds to make a determination before no change is assumed.
+        The umpire has time to make a determination before no change is assumed.
+        The amount of time to wait for the umpire is set in config as UMPIRE_TIMEOUT_TIME.
 
         :param pitch: The pitch object that's status needs to be changed.
         :return: True if the pitch status was changed, otherwise False.
@@ -89,20 +96,46 @@ class Umpire:
         """
         os._exit(0)
 
-    def create_output_file(self, pitches_list):
+    def create_output_file(self, pitches_list: List[Pitch]):
         """
         Creates an output file containing the result of each pitch in pitches_list.
 
         :param pitches_list: A list of pitch objects to create an output file for.
         :return: None
         """
-        output_file = open("output.txt", "w")
+        print(f"\n[Umpire][create_output_file]: creating output file") if config.DEBUG_MODE_ON else None
+        print(f"\n[Umpire][create_output_file]: cwd -> {os.getcwd()}") if config.DEBUG_MODE_ON else None
 
-        pitch_count = len(pitches_list)
-        output_file.write(f"pitch count, {pitch_count}\n")
+        # Create the name of the output file
+        # output_file_name = config.OUTPUT_DIRECTORY_PATH + "output.txt"
+        output_file_name = os.path.join(config.OUTPUT_DIRECTORY_PATH, "output.csv")
+        print(f"[Umpire][create_output_file]: output_file_name -> {output_file_name}") if config.DEBUG_MODE_ON else None
 
-        for index, pitch in enumerate(pitches_list):
-            pitch_status = pitch.pitch_status
-            output_file.write(f"{index}, {pitch_status}\n")
+        # Ensure that the output directory exists. If not, create it
+        if not os.path.exists(config.OUTPUT_DIRECTORY_PATH):
+            print(f"[Umpire][create_output_file]: creating OUTPUT_DIRECTORY_PATH") if config.DEBUG_MODE_ON else None
+            os.makedirs(config.OUTPUT_DIRECTORY_PATH)
+
+        # Try to create and print to the file
+        output_file = None
+        try:
+            output_file = open(output_file_name, "w")
+
+            pitch_count = len(pitches_list)
+            output_file.write(f"pitch count, {pitch_count}\n")
+            print(f"[Umpire][create_output_file]: pitch_count -> {pitch_count}") if config.DEBUG_MODE_ON else None
+
+            for index, pitch in enumerate(pitches_list):
+                pitch_status = pitch.pitch_status
+                print(
+                    f"[Umpire][create_output_file]: index, pitch_status -> [{index}, {pitch_status}]") if config.DEBUG_MODE_ON else None
+                output_file.write(f"{index}, {pitch_status}\n")
+
+        except Exception as e:
+            print(
+                f"[Umpire][create_output_file]: error occurred creating output file") if config.DEBUG_MODE_ON else None
+
+        finally:
+            output_file.close()
 
         return None
