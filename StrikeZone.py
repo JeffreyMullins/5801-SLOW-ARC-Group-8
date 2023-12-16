@@ -1,7 +1,7 @@
 import Pitch
 
 
-class StrikeZone():
+class StrikeZone:
     def __init__(self) -> None:
         self.strike_zone = []
         self.status = False
